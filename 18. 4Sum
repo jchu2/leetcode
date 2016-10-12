@@ -1,0 +1,28 @@
+https://leetcode.com/problems/4sum/
+
+public class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length - 3; i++) {
+            if(i != 0 && nums[i] == nums[i - 1]) continue;
+            for(int start = i + 1; start < nums.length - 2; start++) {
+                if(start != i + 1 && nums[start] == nums[start - 1]) continue;
+                for(int left = start + 1, right = nums.length - 1; left < right;) {
+                    int sum = nums[i] + nums[start] + nums[left] + nums[right];
+                    if(sum < target) left++;
+                    else if(sum > target) right--;
+                    else {
+                        result.add(new ArrayList<>(Arrays.asList(nums[i], nums[start], nums[left], nums[right])));
+                        left++;
+                        right--;
+                        while(left < right && nums[left] == nums[left - 1]) left++;
+                        while(left < right && nums[right] == nums[right + 1])right--;
+                        
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
