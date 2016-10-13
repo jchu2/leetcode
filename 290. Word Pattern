@@ -1,0 +1,21 @@
+/*
+time : O(n), space: O(n)
+*/
+
+public class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        String[] temp = str.split(" ");
+        if(temp.length != pattern.length()) return false;
+        HashMap<Character, String> hm = new HashMap<>(); 
+        for(int i = 0; i < pattern.length(); i++) {
+            char c = pattern.charAt(i);
+            if(hm.containsKey(c)) {
+                if(!hm.get(c).equals(temp[i])) return false;
+            } else {
+                if(hm.containsValue(temp[i])) return false;
+                hm.put(c, temp[i]);
+            }
+        }
+        return true;
+    }
+}
