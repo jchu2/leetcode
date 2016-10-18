@@ -1,0 +1,19 @@
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(candidates);
+        dfs(result, new ArrayList<Integer>(), candidates, target, 0);
+        return result;
+    }
+    private void dfs(List<List<Integer>> res, ArrayList<Integer> path, int[] cand, int target, int cur) {
+        if(target == 0) res.add(new ArrayList<Integer>(path));
+        else if (target > 0) {
+            for(int i = cur; i < cand.length; i++) {
+                if(i > cur && cand[i] == cand[i - 1]) continue; // key 1
+                path.add(cand[i]);
+                dfs(res, path, cand, target - cand[i], i + 1);  // key 2
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+}
