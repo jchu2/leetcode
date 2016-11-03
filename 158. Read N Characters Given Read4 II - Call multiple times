@@ -1,0 +1,18 @@
+public class Solution extends Reader4 {
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    Queue<Character> q = new ArrayDeque<>();
+    public int read(char[] buf, int n) {
+        int readPos = 0, count = 0, read4Pos = 0;
+        while(!q.isEmpty() && readPos < n) buf[readPos++] = q.poll();
+        char[] temp = new char[4];
+        while(readPos < n && (count = read4(temp)) > 0) {
+            for(read4Pos = 0; read4Pos < count && readPos < n; read4Pos++) buf[readPos++] = temp[read4Pos]; 
+        }
+        while(read4Pos < count) q.offer(temp[read4Pos++]);
+        return readPos;
+    }
+}
