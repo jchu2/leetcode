@@ -1,0 +1,36 @@
+public class Solution {
+    public String minWindow(String source, String target) {
+        int len1 = source.length(), len2 = target.length();
+        if(len1 < len2) return "";
+        String result = "";
+        HashMap<Character,Integer> tgt = new HashMap<>();
+        for(int i = 0; i < len2; i++) tgt.put(target.charAt(i), tgt.getOrDefault(c, 0) + 1);
+        HashMap<Character,Integer> map = new HashMap<>(); //put common char and their count
+        int left = 0, minLen = Integer.MAX_VALUE, count =0;
+        for(int i = 0; i < len1; i++){
+            char c = source.charAt(i);
+            if(tgt.containsKey(c)){
+                if(map.containsKey(c)){
+                    if(map.get(c) < tgt.get(c)) count++;
+                map.put(c, map.get(c) + 1);
+                }else{
+                    map.put(c,1);
+                    count++;
+                }
+            }
+            if(count == len2){
+                char sc = source.charAt(left);
+                while(!map.containsKey(sc) || map.get(sc) > tgt.get(sc)){
+                    if(map.containsKey(sc) && map.get(sc) > tgt.get(sc)) map.put(sc,map.get(sc) - 1);
+                    left++;
+                    sc = source.charAt(left);
+                }
+                if (i - left + 1 < minLen){
+                    result = source.substring(left,i + 1);
+                    minLen = i - left + 1;
+                }
+            }
+        }
+        return result;
+    }
+}
