@@ -1,0 +1,14 @@
+http://blog.csdn.net/whuwangyi/article/details/43186045
+
+	public TreeNode UpsideDownBinaryTree(TreeNode root) {
+		if (root == null)
+			return null;
+		TreeNode parent = root, left = root.left, right = root.right;
+		if (left != null) {
+			TreeNode ret = UpsideDownBinaryTree(left);
+			left.left = right;
+			left.right = parent;
+			return ret;
+		}
+		return root;
+	}
