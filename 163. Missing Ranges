@@ -1,0 +1,19 @@
+public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+    List<String> res = new ArrayList<>();
+    for(int cur = 0; cur < nums.length; cur++, lower++){
+        if(nums[cur] != lower){
+            helper(lower, nums[cur] - 1, res);
+            lower = nums[cur];
+        }
+    }
+    helper(lower, upper, res); //Handle the last possible range
+    return res;
+}
+
+private void helper(int lower, int upper, List<String> res){
+    if(lower < upper){
+        res.add(lower + "->" + upper);
+    }else if(lower == upper){
+        res.add(lower + "");
+    }
+}
