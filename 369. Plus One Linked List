@@ -1,20 +1,21 @@
 public class Solution {
     public ListNode plusOne(ListNode head) {
-        ListNode dummy = new ListNode(0), i = dummy, j = dummy;
+        ListNode dummy = new ListNode(0);
         dummy.next = head;
-        while (j.next != null) {
-            j = j.next;
-            if (j.val != 9) i = j;         // i = index of last non-9 digit
+        ListNode lastNotNine = dummy, node = head;
+        
+        while (node != null) {
+            if (node.val != 9) {
+                lastNotNine = node;
+            }
+            node = node.next;
         }
-        i.val++;
-        i = i.next;
-        while (i != null) {
-            i.val = 0;
-            i = i.next;
+        lastNotNine.val++;
+        node = lastNotNine.next;
+        while (node != null) {
+            node.val = 0;
+            node = node.next;
         }
-        if (dummy.val == 0) return dummy.next;
-        return dummy;
+        return dummy.val == 1 ? dummy : dummy.next;
     }
 }
-
-
