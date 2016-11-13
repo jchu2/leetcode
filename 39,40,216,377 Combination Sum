@@ -1,0 +1,81 @@
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(candidates);
+        dfs(result, new ArrayList<Integer>(), candidates, target, 0);
+        return result;
+    }
+    private void dfs(List<List<Integer>> res, List<Integer> path, int[] cand, int tar, int start) {
+        if(tar == 0) res.add(new ArrayList(path));
+        else if(tar > 0) {
+                for(int i = start; i < cand.length; i++){
+                    path.add(cand[i]);
+                    dfs(res, path, cand, tar - cand[i], i);
+                    path.remove(path.size() - 1);
+                }
+        }
+    }
+}
+
+40
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(candidates);
+        dfs(result, new ArrayList<Integer>(), candidates, target, 0);
+        return result;
+    }
+    private void dfs(List<List<Integer>> res, ArrayList<Integer> path, int[] cand, int target, int cur) {
+        if(target == 0) res.add(new ArrayList<Integer>(path));
+        else if (target > 0) {
+            for(int i = cur; i < cand.length; i++) {
+                if(i > cur && cand[i] == cand[i - 1]) continue; // key 1
+                path.add(cand[i]);
+                dfs(res, path, cand, target - cand[i], i + 1);  // key 2
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+}
+
+216
+public class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ans = new ArrayList<>();
+        combination(ans, new ArrayList<Integer>(), k, 1, n);
+        return ans;
+    }
+    
+    private void combination(List<List<Integer>> ans, List<Integer> comb, int k,  int start, int n) {
+    	if (comb.size() == k && n == 0) {
+    		List<Integer> li = new ArrayList<Integer>(comb);
+    		ans.add(li);
+    		return;
+    	}
+    	for (int i = start; i <= 9; i++) {
+    		comb.add(i);
+    		combination(ans, comb, k, i+1, n-i);
+    		comb.remove(comb.size() - 1);
+    	}
+    }
+}
+
+377
+public class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        Arrays.sort(nums);
+        int[] res = new int[target + 1];
+        for (int i = 1; i < res.length; i++) {
+    	    for (int num : nums) {
+    	        if (num > i) break;
+        		else if (num == i) res[i] += 1;
+        		else res[i] += res[i-num];
+    	    }
+    	}
+        return res[target];
+    }
+}
+
+
+
+
