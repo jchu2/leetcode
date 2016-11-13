@@ -1,0 +1,20 @@
+public class TwoSum {
+    List<Integer> list = new ArrayList<>();
+    Map<Integer, Integer> map = new HashMap<>();
+	public void add(int number) {
+	    list.add(number);
+	    map.put(number, map.getOrDefault(number, 0) + 1);
+	}
+	public boolean find(int value) {
+	    if(list.size() > 1){
+	        boolean ret = false;
+	        for(Integer cur : list){
+	            map.put(cur, map.get(cur) - 1);
+	            if(map.containsKey(value - cur) && map.get(value - cur) > 0) ret = true;
+	            map.put(cur, map.get(cur) + 1);
+	            if(ret) return true;
+	        }
+	    }
+	    return false;
+	}
+}
