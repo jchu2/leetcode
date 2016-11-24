@@ -1,0 +1,33 @@
+public class Solution {
+    public int longestValidParentheses(String s) {
+        //use to record how many token left in the stack
+        int left =0;
+        //use to record how many left Parentheses in the stack
+        Stack<Integer> stack = new Stack<>();
+        //record the max length
+        int max=0;
+        for(int index=0; index<s.length(); index++){
+            Character ch = s.charAt(index);
+            if(ch=='('){//put the char into the stack directly
+                stack.push(index);
+            }
+            else{
+                if(stack.isEmpty()){
+                    //add the left char directly, as this char will never be matched
+                    left=index+1;
+                }
+                else{
+                    //there have left parentheses in the stack canbe paired
+                    stack.pop();
+                    if(stack.isEmpty()){
+                        max = Math.max(max, index-left+1);
+                    }
+                    else{
+                        max = Math.max(max, index-stack.peek());
+                    }
+                }
+            }
+        }
+        return max;
+    }
+}
